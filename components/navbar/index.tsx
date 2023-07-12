@@ -3,7 +3,7 @@ import { Navbar, NavbarBrand, NavbarContent, NavbarMenuToggle, NavbarMenu, Navba
 import { useState } from "react";
 
 export default function Navigation() {
-  const [isMenuOpen, setIsMenuOpen] = useState(true);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const menuItems = [
     "Profile",
@@ -30,22 +30,31 @@ export default function Navigation() {
 
       <NavbarContent className="sm:hidden pr-3" justify="center">
         <NavbarBrand>
-          <p className="font-bold text-inherit">ACME</p>
+          <p className="font-bold text-inherit">SEKTEKOMIK</p>
         </NavbarBrand>
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarBrand>
-          <p className="font-bold text-inherit">ACME</p>
+          <p className="font-bold text-inherit">SEKTEKOMIK</p>
         </NavbarBrand>
         <NavbarItem as={Link} color="foreground" href="#">
-          Features
+          Home
         </NavbarItem>
         <NavbarItem isActive as={Link} color="warning" href="#">
-          Customers
+          Daftar Komik
         </NavbarItem>
         <NavbarItem as={Link} color="foreground" href="#">
-          Integrations
+          Populer
+        </NavbarItem>
+        <NavbarItem as={Link} color="foreground" href="#">
+          Projects
+        </NavbarItem>
+        <NavbarItem as={Link} color="foreground" href="#">
+          Bookmarks
+        </NavbarItem>
+        <NavbarItem as={Link} color="foreground" href="#">
+          History
         </NavbarItem>
       </NavbarContent>
 
