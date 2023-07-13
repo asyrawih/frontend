@@ -20,6 +20,12 @@ export const LatestSection = ({ title }: LatestSectionProps) => {
             <MangaBoxContainer />
             <MangaBoxContainer />
             <MangaBoxContainer />
+            <MangaBoxContainer />
+            <MangaBoxContainer />
+            <MangaBoxContainer />
+            <MangaBoxContainer />
+            <MangaBoxContainer />
+            <MangaBoxContainer />
           </div>
         </CardBody>
       </Card>
@@ -40,10 +46,21 @@ const MangaBoxContainer = () => {
       />
       <div className='flex flex-col w-full'>
         <span className='font-bold text-white ml-2 mb-2'>Some Text</span>
-        <div id='chapter_continer' className='flex justify-between'>
+        <div id='chapter_continer' className='flex justify-between mt-1'>
           <Chip variant='faded' color='default' className='ml-2 cursor-pointer hover:text-blue-300'>Ch.1</Chip>
           <span className='ml-2 text-xs text-gray-600'>2 hours ago</span>
         </div>
+
+        <div id='chapter_continer' className='flex justify-between mt-1'>
+          <Chip variant='faded' color='default' className='ml-2 cursor-pointer hover:text-blue-300'>Ch.1</Chip>
+          <span className='ml-2 text-xs text-gray-600'>2 hours ago</span>
+        </div>
+
+        <div id='chapter_continer' className='flex justify-between mt-1'>
+          <Chip variant='faded' color='default' className='ml-2 cursor-pointer hover:text-blue-300'>Ch.1</Chip>
+          <span className='ml-2 text-xs text-gray-600'>2 hours ago</span>
+        </div>
+
       </div>
     </div>
   )
