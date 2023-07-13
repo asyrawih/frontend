@@ -59,6 +59,9 @@ const MobileVersion = () => {
             <Checkbox defaultSelected isDisabled size="sm" >Update On: {'july 2022'}</Checkbox>
           </div>
         </div>
+        <div className="w-full">
+          <Button className="w-full">Bookmarks</Button>
+        </div>
       </div>
     </div>
   )
