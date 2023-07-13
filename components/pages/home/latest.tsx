@@ -2,12 +2,16 @@
 import { Card, CardBody, CardHeader, Chip, Divider, Image, Spacer } from '@nextui-org/react'
 import React from 'react'
 
-export const LatestSection = () => {
+type LatestSectionProps = {
+  title?: string
+}
+
+export const LatestSection = ({ title }: LatestSectionProps) => {
   return (
     <div className='mt-3'>
       <Card className='p-3'>
         <CardHeader>
-          <span className='text-bold'>Latest Section</span>
+          <span className='font-bold, text-xl'>{title}</span>
         </CardHeader>
         <Divider />
         <CardBody className='p-0 mt-3'>
