@@ -74,7 +74,7 @@ export default function Navigation() {
               color={
                 index === 2 ? "warning" : index === menuItems.length - 1 ? "danger" : "foreground"
               }
-              href="#"
+              href="/"
               size="lg"
             >
               {item}
