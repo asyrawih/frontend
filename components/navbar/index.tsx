@@ -11,6 +11,7 @@ export default function Navigation() {
     "Populer",
     "Projects",
     "Bookmarks",
+    "Music",
     "Log Out",
   ];
 
