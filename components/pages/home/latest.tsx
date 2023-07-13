@@ -26,6 +26,16 @@ export const LatestSection = ({ title }: LatestSectionProps) => {
             <MangaBoxContainer />
             <MangaBoxContainer />
             <MangaBoxContainer />
+            <MangaBoxContainer />
+            <MangaBoxContainer />
+            <MangaBoxContainer />
+            <MangaBoxContainer />
+            <MangaBoxContainer />
+            <MangaBoxContainer />
+            <MangaBoxContainer />
+            <MangaBoxContainer />
+            <MangaBoxContainer />
+            <MangaBoxContainer />
           </div>
         </CardBody>
       </Card>

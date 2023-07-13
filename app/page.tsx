@@ -12,8 +12,8 @@ export default async function Home() {
       </div>
       {/* Sidebar Not Showing On Desktop Mode*/}
       <div className="hidden md:flex flex-col w-2/6">
-        <Sidebar title={"Genre"} />
-        <Sidebar title={"Chat"} />
+        <Sidebar title={"Chat"} variant={'Chat'} type="Chat" textSize="lg" />
+        <Sidebar title={"Genre"} variant={'Genre'} type="Genre" textSize="lg" />
       </div>
     </div>
   )
