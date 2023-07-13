@@ -1,29 +1,57 @@
 'use client'
+import SearchBar from "@/components/search";
 import { Image } from "@nextui-org/image";
 import { Button, Card, CardBody, CardHeader, Checkbox, Chip, Divider, Spacer } from "@nextui-org/react";
 
 
 export default function DetailPages({ params }: { params: { slug: string } }) {
   return (
-    <Card>
-      <CardBody className="relative p-0 overflow-y-hidden">
-        <Image
-          fetchPriority='auto'
-          src='https://komikcast.io/wp-content/uploads/2020/04/jhfdjksahkj289a-e1586171017310.jpg'
-          radius='none'
-          loading='lazy'
-          height={120}
-          width={300}
-          className="w-full object-cover"
-          removeWrapper
-          isBlurred
-          style={{ height: "500px" }}
-        />
-        {/* Desktop Version */}
-        <DesktopVersion />
+    <>
+      <Card>
+        <CardBody className="relative p-0 overflow-y-hidden">
+          <Image
+            fetchPriority='auto'
+            src='https://komikcast.io/wp-content/uploads/2020/04/jhfdjksahkj289a-e1586171017310.jpg'
+            radius='none'
+            loading='lazy'
+            height={120}
+            width={300}
+            className="w-full object-cover"
+            removeWrapper
+            isBlurred
+            style={{ height: "500px" }}
+          />
+          {/* Desktop Version */}
+          <DesktopVersion />
 
-        {/* Mobile Version */}
-        <MobileVersion />
+          {/* Mobile Version */}
+          <MobileVersion />
+          {/* Chapter Card */}
+          <Spacer y={12} />
+        </CardBody>
+      </Card>
+      <Spacer y={6} />
+      <ChapterCard />
+      <Spacer y={12} />
+    </>
+  )
+}
+
+const ChapterCard = () => {
+  return (
+    <Card>
+      <CardHeader className="flex justify-between">
+        <span className="hidden lg:flex">Chapter List</span>
+        <SearchBar />
+      </CardHeader>
+      <CardBody className="h-60 overflow-auto">
+        <div className="grid grid-cols-3 gap-2">
+          {Array.from(Array(101).keys()).map((val) => (
+            <Card isPressable shadow="sm" className="flex border w-full h-16 justify-center items-center rounded ">
+              {`Chapter-${val}`}
+            </Card>
+          ))}
+        </div>
       </CardBody>
     </Card>
   )
@@ -32,7 +60,7 @@ export default function DetailPages({ params }: { params: { slug: string } }) {
 const MobileVersion = () => {
   return (
     <div className="flex p-3 lg:hidden">
-      <div className="z-30 mt-2">
+      <div className="z-30 mt-2 w-full">
         <div>
           <span className="text-2xl font-bold text-gray-500">Kuro no Shoukanshi Bahasa Indonesia</span>
         </div>
