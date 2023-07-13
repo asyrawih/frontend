@@ -6,15 +6,11 @@ export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const menuItems = [
-    "Profile",
-    "Dashboard",
-    "Activity",
-    "Analytics",
-    "System",
-    "Deployments",
-    "My Settings",
-    "Team Settings",
-    "Help & Feedback",
+    "Home",
+    "Daftar Komik",
+    "Populer",
+    "Projects",
+    "Bookmarks",
     "Log Out",
   ];
 
@@ -38,7 +34,7 @@ export default function Navigation() {
         <NavbarBrand>
           <p className="font-bold text-inherit">SEKTEKOMIK</p>
         </NavbarBrand>
-        <NavbarItem as={Link} color="foreground" href="#">
+        <NavbarItem as={Link} color="foreground" href="/">
           Home
         </NavbarItem>
         <NavbarItem isActive as={Link} color="warning" href="#">

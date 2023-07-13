@@ -30,9 +30,9 @@ export const Sidebar = ({ title, variant, type, textSize }: SidebarProps) => {
       <CardHeader>{title}</CardHeader>
       <Divider />
       <CardBody className={type == 'Chat' ? 'p-0' : 'p-5'}>
-        {type == "Chat" && (
-          <iframe src="https://komikcastsite.chatango.com/" style={{ height: '400px' }} />
-        )}
+        {/* {type == "Chat" && ( */}
+        {/*   <iframe src="https://komikcastsite.chatango.com/" style={{ height: '400px' }} /> */}
+        {/* )} */}
         {type == 'Genre' && (
           <div className="flex">
             <Chip className="m-1">Genre</Chip>
