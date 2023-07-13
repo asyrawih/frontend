@@ -2,6 +2,7 @@
 
 import { Card, CardBody, CardHeader, Chip, Divider } from "@nextui-org/react"
 import clsx from "clsx"
+import Script from "next/script"
 
 
 enum Variant {
@@ -23,12 +24,15 @@ type SidebarProps = {
 
 
 export const Sidebar = ({ title, variant, type, textSize }: SidebarProps) => {
-  let SidebarBarVariant = clsx('lg:flex w-full mt-3 ml-2 p-3', Variant[variant], TextVariant[textSize])
+  let SidebarBarVariant = clsx('lg:flex w-full mt-3 ml-2', Variant[variant], TextVariant[textSize])
   return (
     <Card className={SidebarBarVariant}>
       <CardHeader>{title}</CardHeader>
       <Divider />
-      <CardBody>
+      <CardBody className={type == 'Chat' ? 'p-0' : 'p-5'}>
+        {type == "Chat" && (
+          <iframe src="https://komikcastsite.chatango.com/" style={{ height: '400px' }} />
+        )}
         {type == 'Genre' && (
           <div className="flex">
             <Chip className="m-1">Genre</Chip>
