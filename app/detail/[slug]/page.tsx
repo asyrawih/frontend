@@ -2,6 +2,7 @@
 import SearchBar from "@/components/search";
 import { Image } from "@nextui-org/image";
 import { Button, Card, CardBody, CardHeader, Checkbox, Chip, Divider, Spacer } from "@nextui-org/react";
+import { ChangeEvent, useEffect, useState } from "react";
 
 
 export default function DetailPages({ params }: { params: { slug: string } }) {
@@ -38,16 +39,35 @@ export default function DetailPages({ params }: { params: { slug: string } }) {
 }
 
 const ChapterCard = () => {
+  const [dummy, setDummy] = useState(Array.from(Array(101).keys()));
+  const [filter, setFilter] = useState('');
+
+  const handleValue = (evt: ChangeEvent<HTMLInputElement>) => {
+    const filterValue = evt.target.value;
+    setFilter(filterValue);
+
+  };
+
+  useEffect(() => {
+    if (filter == '') {
+      setDummy(Array.from(Array(101).keys()))
+    }
+    // Filter the dummy data based on the filter value or revert back to the original data if the value is empty
+    const filteredDummy = dummy.filter((val) => `Chapter-${val}`.toLowerCase().includes(filter.toLowerCase()))
+    setDummy(filteredDummy);
+
+  }, [filter])
+
   return (
     <Card>
       <CardHeader className="flex justify-between">
         <span className="hidden lg:flex">Chapter List</span>
-        <SearchBar />
+        <SearchBar onChange={handleValue} value={filter} />
       </CardHeader>
       <CardBody className="h-60 overflow-auto">
         <div className="grid grid-cols-3 gap-2">
-          {Array.from(Array(101).keys()).map((val) => (
-            <Card isPressable shadow="sm" className="flex border w-full h-16 justify-center items-center rounded ">
+          {dummy.map((val) => (
+            <Card isPressable shadow="sm" key={val} className="flex border w-full h-16 justify-center items-center rounded ">
               {`Chapter-${val}`}
             </Card>
           ))}
