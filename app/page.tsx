@@ -1,14 +1,58 @@
 import { LatestSection } from "@/components/pages/home/latest";
 import { Sidebar } from "@/components/pages/home/sidebar";
+import { generatePresignedUrl } from "@/utils/minio";
 import { Spacer } from "@nextui-org/react";
 
+
+export interface Response {
+  code: number
+  message: string
+  data: Manga[]
+}
+
+export interface Manga {
+  id: number
+  title: string
+  status: string
+  release_date: string
+  total_chapter: number
+  author: string
+  type: string
+  sinopsis: string
+  media_type: string
+  file_path: string
+  chapter: Chapter[]
+}
+
+export interface Chapter {
+  chapter_id: number
+  chapter: number
+}
+const getManga = async (): Promise<Response> => {
+  const req = await fetch("http://localhost:3000/manga/")
+  return req.json()
+}
+
 export default async function Home() {
+  const { data } = await getManga()
+
+  let newData = data.map(async (manga: Manga) => {
+    const preSignedUrl = await generatePresignedUrl(manga.file_path)
+    const modifiedManga = {
+      ...manga,
+      file_path: preSignedUrl
+    }
+    return modifiedManga
+  })
+
+  const result = await Promise.all(newData)
+
   return (
     <div className="flex">
       <div className="flex flex-col w-full">
-        <LatestSection title="Hot Update" />
-        <LatestSection title="Latest Update" />
-        <LatestSection title="Manhwa" />
+        <LatestSection data={result} title="Hot Update" />
+        <LatestSection data={result} title="Latest Update" />
+        <LatestSection data={result} title="Manhwa" />
       </div>
       {/* Sidebar Not Showing On Desktop Mode*/}
       <div className="hidden md:flex flex-col w-2/6">

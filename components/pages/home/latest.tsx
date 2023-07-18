@@ -1,12 +1,16 @@
 'use client'
+import { Manga } from '@/app/page'
+import { generatePresignedUrl } from '@/utils/minio'
 import { Card, CardBody, CardHeader, Chip, Divider, Image, Spacer } from '@nextui-org/react'
-import React from 'react'
+import { data } from 'autoprefixer'
+import React, { useCallback, useEffect, useState } from 'react'
 
 type LatestSectionProps = {
   title?: string
+  data: Manga[] | undefined
 }
 
-export const LatestSection = ({ title }: LatestSectionProps) => {
+export const LatestSection = ({ title, data }: LatestSectionProps) => {
   return (
     <div className='mt-3'>
       <Card className='p-3'>
@@ -16,26 +20,9 @@ export const LatestSection = ({ title }: LatestSectionProps) => {
         <Divider />
         <CardBody className='p-0 mt-3'>
           <div className='grid gap-2 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3'>
-            <MangaBoxContainer />
-            <MangaBoxContainer />
-            <MangaBoxContainer />
-            <MangaBoxContainer />
-            <MangaBoxContainer />
-            <MangaBoxContainer />
-            <MangaBoxContainer />
-            <MangaBoxContainer />
-            <MangaBoxContainer />
-            <MangaBoxContainer />
-            <MangaBoxContainer />
-            <MangaBoxContainer />
-            <MangaBoxContainer />
-            <MangaBoxContainer />
-            <MangaBoxContainer />
-            <MangaBoxContainer />
-            <MangaBoxContainer />
-            <MangaBoxContainer />
-            <MangaBoxContainer />
-            <MangaBoxContainer />
+            {data?.map((manga) => (
+              <MangaBoxContainer manga={manga} key={manga.id} />
+            ))}
           </div>
         </CardBody>
       </Card>
@@ -43,33 +30,27 @@ export const LatestSection = ({ title }: LatestSectionProps) => {
   )
 }
 
-const MangaBoxContainer = () => {
+const MangaBoxContainer = ({ manga }: { manga: Manga }) => {
+  const chapter = manga.chapter ?? []
+
   return (
     <div className='flex'>
       <Image
         isZoomed
         fetchPriority='auto'
-        src='https://komikcast.io/wp-content/uploads/2020/04/jhfdjksahkj289a-e1586171017310.jpg'
+        src={manga.file_path}
         width={200}
         radius='sm'
         loading='eager'
       />
       <div className='flex flex-col w-full'>
-        <span className='font-bold text-white ml-2 mb-2'>Some Text</span>
-        <div id='chapter_continer' className='flex justify-between mt-1'>
-          <Chip variant='faded' size='sm' color='default' className='ml-2 cursor-pointer hover:text-blue-300'>Ch.1</Chip>
-          <span className='ml-2 text-xs text-gray-600'>2 hours ago</span>
-        </div>
-
-        <div id='chapter_continer' className='flex justify-between mt-1'>
-          <Chip variant='faded' color='default' size='sm' className='ml-2 cursor-pointer hover:text-blue-300'>Ch.1</Chip>
-          <span className='ml-2 text-xs text-gray-600'>2 hours ago</span>
-        </div>
-
-        <div id='chapter_continer' className='flex justify-between mt-1'>
-          <Chip variant='faded' color='default' size='sm' className='ml-2 cursor-pointer hover:text-blue-300'>Ch.1</Chip>
-          <span className='ml-2 text-xs text-gray-600'>2 hours ago</span>
-        </div>
+        <span className='font-bold text-white ml-2 mb-2'>{manga.title}</span>
+        {chapter.map((chapter) => (
+          <div id='chapter_continer' key={chapter.chapter_id} className='flex justify-between mt-1'>
+            <Chip variant='faded' size='sm' color='default' className='ml-2 cursor-pointer hover:text-blue-300'>Ch.1</Chip>
+            <span className='ml-2 text-xs text-gray-600'>2 hours ago</span>
+          </div>
+        ))}
 
       </div>
     </div>
