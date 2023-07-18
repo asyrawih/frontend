@@ -29,13 +29,12 @@ export interface Chapter {
   chapter: number
 }
 const getManga = async (): Promise<Response> => {
-  const req = await fetch("http://localhost:3000/manga/")
+  const req = await fetch("http://localhost:3000/manga/", {next: {revalidate: 6}})
   return req.json()
 }
 
 export default async function Home() {
   const { data } = await getManga()
-
   let newData = data.map(async (manga: Manga) => {
     const preSignedUrl = await generatePresignedUrl(manga.file_path)
     const modifiedManga = {
