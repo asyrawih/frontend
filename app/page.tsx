@@ -27,9 +27,10 @@ export interface Manga {
 export interface Chapter {
   chapter_id: number
   chapter: number
+  created_at: string
 }
 const getManga = async (): Promise<Response> => {
-  const req = await fetch("http://localhost:3000/manga/", {next: {revalidate: 6}})
+  const req = await fetch("http://localhost:3000/manga/", { next: { revalidate: 6 } })
   return req.json()
 }
 

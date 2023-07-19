@@ -47,8 +47,8 @@ const MangaBoxContainer = ({ manga }: { manga: Manga }) => {
         <span className='font-bold text-white ml-2 mb-2'>{manga.title}</span>
         {chapter.map((chapter) => (
           <div id='chapter_continer' key={chapter.chapter_id} className='flex justify-between mt-1'>
-            <Chip variant='faded' size='sm' color='default' className='ml-2 cursor-pointer hover:text-blue-300'>Ch.1</Chip>
-            <span className='ml-2 text-xs text-gray-600'>2 hours ago</span>
+            <Chip variant='faded' size='sm' color='default' className='ml-2 cursor-pointer hover:text-blue-300'>Ch.{chapter.chapter}</Chip>
+            <span className='ml-2 text-xs text-gray-600'>{chapter.created_at}</span>
           </div>
         ))}
 
