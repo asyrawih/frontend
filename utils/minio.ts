@@ -10,7 +10,7 @@ const minio = new Client({
   secretKey: 'BpWXW10iMH8fWHRtriTuFJmjcWCqrsxEHvO9OKjb',
 })
 
-export const generatePresignedUrl = async (objectName: string) => {
+export const GeneratePresignedUrl = async (objectName: string) => {
   const presignedUrl = await minio.presignedGetObject(bucketName, objectName, 10); // 24 hours expiration time
   return presignedUrl
 };

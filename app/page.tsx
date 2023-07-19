@@ -1,6 +1,6 @@
 import { LatestSection } from "@/components/pages/home/latest";
 import { Sidebar } from "@/components/pages/home/sidebar";
-import { generatePresignedUrl } from "@/utils/minio";
+import { GeneratePresignedUrl } from "@/utils/minio";
 import { Spacer } from "@nextui-org/react";
 
 
@@ -37,7 +37,7 @@ const getManga = async (): Promise<Response<Manga[]>> => {
 export default async function Home() {
   const { data } = await getManga()
   let newData = data.map(async (manga: Manga) => {
-    const preSignedUrl = await generatePresignedUrl(manga.file_path)
+    const preSignedUrl = await GeneratePresignedUrl(manga.file_path)
     const modifiedManga = {
       ...manga,
       file_path: preSignedUrl
