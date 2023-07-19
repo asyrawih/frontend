@@ -1,11 +1,17 @@
 'use client'
+import { Manga, Response } from "@/app/page";
 import SearchBar from "@/components/search";
 import { Image } from "@nextui-org/image";
 import { Button, Card, CardBody, CardHeader, Checkbox, Chip, Divider, Spacer } from "@nextui-org/react";
 import { ChangeEvent, useEffect, useState } from "react";
 
+const getDetail = async ({ id }: { id: string }) : Promise<Response<Manga>> => {
+  const result = await fetch("http://localhost:3000/manga/manga-slug?manga_id=" + id)
+  return result.json()
+}
 
-export default function DetailPages({ params }: { params: { slug: string } }) {
+export default async function DetailPages({ params }: { params: { slug: string } }) {
+  const { data } = await getDetail({ id: params.slug })
   return (
     <>
       <Card>
@@ -23,7 +29,7 @@ export default function DetailPages({ params }: { params: { slug: string } }) {
             style={{ height: "500px" }}
           />
           {/* Desktop Version */}
-          <DesktopVersion />
+          <DesktopVersion manga={data} />
 
           {/* Mobile Version */}
           <MobileVersion />
@@ -115,7 +121,7 @@ const MobileVersion = () => {
   )
 }
 
-const DesktopVersion = () => {
+const DesktopVersion = ({manga}: {manga : Manga} ) => {
   return (
     <div className="hidden lg:flex">
       <div className="w-1/3">
@@ -132,10 +138,10 @@ const DesktopVersion = () => {
       <Spacer x={12} />
       <div className="z-30 mt-2 flex flex-col justify-between w-full">
         <div>
-          <span className="text-4xl font-bold text-gray-500">Kuro no Shoukanshi Bahasa Indonesia</span>
+          <span className="text-4xl font-bold text-gray-500">{manga.title}</span>
         </div>
         <div className="subpixel-antialiased text-gray-500">
-          The Berserker Rises to Greatness.
+          {''}
         </div>
         <div className="subpixel-antialiased text-gray-500 mt-2">
           <Chip className="mx-1">Action</Chip>
@@ -146,21 +152,20 @@ const DesktopVersion = () => {
         </div>
         <div className="flex flex-row gap-1 mt-2 mb-2 justify-between">
           <div className="flex flex-col">
-            <Checkbox defaultSelected isDisabled size="sm" >Released : {'2022'}</Checkbox>
-            <Checkbox defaultSelected isDisabled size="sm" >Status: {'ongoing'}</Checkbox>
-            <Checkbox defaultSelected isDisabled size="sm" >Total Chapter {'200'}</Checkbox>
+            <Checkbox defaultSelected isDisabled size="sm" >Released : {manga.release_date}</Checkbox>
+            <Checkbox defaultSelected isDisabled size="sm" >Status: {manga.status}</Checkbox>
+            <Checkbox defaultSelected isDisabled size="sm" >Total Chapter {manga.total_chapter}</Checkbox>
           </div>
           <div className="flex flex-col">
             <Checkbox defaultSelected isDisabled size="sm" >Author: {'hanan'}</Checkbox>
             <Checkbox defaultSelected isDisabled size="sm" >Type : {'manhwa'}</Checkbox>
-            <Checkbox defaultSelected isDisabled size="sm" >Update On: {'july 2022'}</Checkbox>
           </div>
         </div>
       </div>
       <div className="flex w-full justify-around mt-2">
         <div className="flex flex-col">
           <div className="w-40 h-40 bg-gray-500">
-            Rating Start In Here
+            {'Entar Belom Jadi'}
           </div>
           <Spacer y={3} />
           <Button>Bookmark</Button>

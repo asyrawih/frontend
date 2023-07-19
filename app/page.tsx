@@ -4,10 +4,10 @@ import { generatePresignedUrl } from "@/utils/minio";
 import { Spacer } from "@nextui-org/react";
 
 
-export interface Response {
+export interface Response<T> {
   code: number
   message: string
-  data: Manga[]
+  data: T
 }
 
 export interface Manga {
@@ -29,8 +29,8 @@ export interface Chapter {
   chapter: number
   created_at: string
 }
-const getManga = async (): Promise<Response> => {
-  const req = await fetch("http://localhost:3000/manga/", { next: { revalidate: 6 } })
+const getManga = async (): Promise<Response<Manga[]>> => {
+  const req = await fetch("http://localhost:3000/manga/", { next: { revalidate: 5, tags: ["manga"] } })
   return req.json()
 }
 
@@ -50,9 +50,7 @@ export default async function Home() {
   return (
     <div className="flex">
       <div className="flex flex-col w-full">
-        <LatestSection data={result} title="Hot Update" />
         <LatestSection data={result} title="Latest Update" />
-        <LatestSection data={result} title="Manhwa" />
       </div>
       {/* Sidebar Not Showing On Desktop Mode*/}
       <div className="hidden md:flex flex-col w-2/6">

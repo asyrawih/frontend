@@ -3,6 +3,8 @@ import { Manga } from '@/app/page'
 import { generatePresignedUrl } from '@/utils/minio'
 import { Card, CardBody, CardHeader, Chip, Divider, Image, Spacer } from '@nextui-org/react'
 import { data } from 'autoprefixer'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React, { useCallback, useEffect, useState } from 'react'
 
 type LatestSectionProps = {
@@ -35,14 +37,17 @@ const MangaBoxContainer = ({ manga }: { manga: Manga }) => {
 
   return (
     <div className='flex'>
-      <Image
-        isZoomed
-        fetchPriority='auto'
-        src={manga.file_path}
-        width={200}
-        radius='sm'
-        loading='eager'
-      />
+      <Link href={`/detail/${manga.id}`}>
+        <Image
+          isZoomed
+          fetchPriority='auto'
+          src={manga.file_path}
+          width={200}
+          radius='sm'
+          loading='eager'
+        />
+      </Link>
+
       <div className='flex flex-col w-full'>
         <span className='font-bold text-white ml-2 mb-2'>{manga.title}</span>
         {chapter.map((chapter) => (
