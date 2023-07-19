@@ -11,6 +11,6 @@ const minio = new Client({
 })
 
 export const GeneratePresignedUrl = async (objectName: string) => {
-  const presignedUrl = await minio.presignedGetObject(bucketName, objectName, 10); // 24 hours expiration time
+  const presignedUrl = await minio.presignedGetObject(bucketName, objectName, 5); // 24 hours expiration time
   return presignedUrl
 };
