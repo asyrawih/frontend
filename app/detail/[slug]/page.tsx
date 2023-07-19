@@ -1,5 +1,5 @@
 'use client'
-import { Manga, Response } from "@/app/page";
+import { Manga, Response, Chapter } from "@/app/page";
 import SearchBar from "@/components/search";
 import { Image } from "@nextui-org/image";
 import { Button, Card, CardBody, CardHeader, Checkbox, Chip, Divider, Spacer } from "@nextui-org/react";
@@ -32,20 +32,20 @@ export default async function DetailPages({ params }: { params: { slug: string }
           <DesktopVersion manga={data} />
 
           {/* Mobile Version */}
-          <MobileVersion />
+          <MobileVersion manga={data} />
           {/* Chapter Card */}
           <Spacer y={12} />
         </CardBody>
       </Card>
       <Spacer y={6} />
-      <ChapterCard />
+      <ChapterCard chapter={data.chapter} />
       <Spacer y={12} />
     </>
   )
 }
 
-const ChapterCard = () => {
-  const [dummy, setDummy] = useState(Array.from(Array(101).keys()));
+const ChapterCard = ({chapter} : {chapter : Chapter[]}) => {
+  const [chap, setDummy] = useState(chapter);
   const [filter, setFilter] = useState('');
 
   const handleValue = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -56,10 +56,10 @@ const ChapterCard = () => {
 
   useEffect(() => {
     if (filter == '') {
-      setDummy(Array.from(Array(101).keys()))
+      setDummy(chapter)
     }
     // Filter the dummy data based on the filter value or revert back to the original data if the value is empty
-    const filteredDummy = dummy.filter((val) => `Chapter-${val}`.toLowerCase().includes(filter.toLowerCase()))
+    const filteredDummy = chap.filter((val) => val.chapter.toString().includes(filter.toLowerCase()))
     setDummy(filteredDummy);
 
   }, [filter])
@@ -72,9 +72,9 @@ const ChapterCard = () => {
       </CardHeader>
       <CardBody className="h-60 overflow-auto">
         <div className="grid grid-cols-3 gap-2">
-          {dummy.map((val) => (
-            <Card isPressable shadow="sm" key={val} className="flex border w-full h-16 justify-center items-center rounded ">
-              {`Chapter-${val}`}
+          {chap.map((val) => (
+            <Card isPressable shadow="sm" key={val.chapter_id} className="flex border w-full h-16 justify-center items-center rounded ">
+              {`Chapter-${val.chapter}`}
             </Card>
           ))}
         </div>
@@ -83,15 +83,15 @@ const ChapterCard = () => {
   )
 }
 
-const MobileVersion = () => {
+const MobileVersion = ({manga}: {manga : Manga} ) => {
   return (
     <div className="flex p-3 lg:hidden">
       <div className="z-30 mt-2 w-full">
         <div>
-          <span className="text-2xl font-bold text-gray-500">Kuro no Shoukanshi Bahasa Indonesia</span>
+          <span className="text-2xl font-bold text-gray-500">{manga.title}</span>
         </div>
         <div className="subpixel-antialiased text-gray-500">
-          The Berserker Rises to Greatness.
+          {''}
         </div>
         <div className="subpixel-antialiased text-gray-500 mt-2">
           <Chip className="mx-1 my-1">Action</Chip>
@@ -103,14 +103,13 @@ const MobileVersion = () => {
 
         <div className="flex flex-row gap-1 mt-2 mb-2 justify-between">
           <div className="flex flex-col">
-            <Checkbox defaultSelected isDisabled size="sm" >Released : {'2022'}</Checkbox>
-            <Checkbox defaultSelected isDisabled size="sm" >Status: {'ongoing'}</Checkbox>
-            <Checkbox defaultSelected isDisabled size="sm" >Total Chapter {'200'}</Checkbox>
+            <Checkbox defaultSelected isDisabled size="sm" >Released : {manga.release_date}</Checkbox>
+            <Checkbox defaultSelected isDisabled size="sm" >Status: {manga.status}</Checkbox>
+            <Checkbox defaultSelected isDisabled size="sm" >Total Chapter {manga.total_chapter}</Checkbox>
           </div>
           <div className="flex flex-col">
-            <Checkbox defaultSelected isDisabled size="sm" >Author: {'hanan'}</Checkbox>
-            <Checkbox defaultSelected isDisabled size="sm" >Type : {'manhwa'}</Checkbox>
-            <Checkbox defaultSelected isDisabled size="sm" >Update On: {'july 2022'}</Checkbox>
+            <Checkbox defaultSelected isDisabled size="sm" >Author: {manga.author}</Checkbox>
+            <Checkbox defaultSelected isDisabled size="sm" >Type : {manga.type}</Checkbox>
           </div>
         </div>
         <div className="w-full">
