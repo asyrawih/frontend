@@ -3,9 +3,9 @@ import { Manga, Response, Chapter } from "@/app/page";
 import SearchBar from "@/components/search";
 import { Image } from "@nextui-org/image";
 import { Button, Card, CardBody, CardHeader, Checkbox, Chip, Divider, Spacer } from "@nextui-org/react";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 
-const getDetail = async ({ id }: { id: string }) : Promise<Response<Manga>> => {
+const getDetail = async ({ id }: { id: string }): Promise<Response<Manga>> => {
   const result = await fetch("http://localhost:3000/manga/manga-slug?manga_id=" + id)
   return result.json()
 }
@@ -44,46 +44,44 @@ export default async function DetailPages({ params }: { params: { slug: string }
   )
 }
 
-const ChapterCard = ({chapter} : {chapter : Chapter[]}) => {
-  const [chap, setDummy] = useState(chapter);
-  const [filter, setFilter] = useState('');
+const ChapterCard = ({ chapter }: { chapter: Chapter[] }) => {
+  const [filter, setFilter] = useState<Chapter[]>([]);
+  const [filterValue, setFilterValue] = useState('')
 
   const handleValue = (evt: ChangeEvent<HTMLInputElement>) => {
-    const filterValue = evt.target.value;
-    setFilter(filterValue);
-
+    setFilterValue(evt.target.value)
+    const filterData = chapter.filter((manga: Chapter) => {
+      return manga.chapter.toString().includes(evt.target.value);
+    })
+    setFilter(filterData)
   };
-
-  useEffect(() => {
-    if (filter == '') {
-      setDummy(chapter)
-    }
-    // Filter the dummy data based on the filter value or revert back to the original data if the value is empty
-    const filteredDummy = chap.filter((val) => val.chapter.toString().includes(filter.toLowerCase()))
-    setDummy(filteredDummy);
-
-  }, [filter])
 
   return (
     <Card>
       <CardHeader className="flex justify-between">
         <span className="hidden lg:flex">Chapter List</span>
-        <SearchBar onChange={handleValue} value={filter} />
+        <SearchBar onChange={(e) => handleValue(e)} value={filterValue} />
       </CardHeader>
       <CardBody className="h-60 overflow-auto">
         <div className="grid grid-cols-3 gap-2">
-          {chap.map((val) => (
-            <Card isPressable shadow="sm" key={val.chapter_id} className="flex border w-full h-16 justify-center items-center rounded ">
-              {`Chapter-${val.chapter}`}
-            </Card>
-          ))}
+          {filter.length > 0 ?
+            filter.map((val) => (
+              <Card isPressable shadow="sm" key={val.chapter_id} className="flex border w-full h-16 justify-center items-center rounded ">
+                {`Chapter-${val.chapter}`}
+              </Card>
+            )) : chapter.map((val) => (
+              <Card isPressable shadow="sm" key={val.chapter_id} className="flex border w-full h-16 justify-center items-center rounded ">
+                {`Chapter-${val.chapter}`}
+              </Card>
+            ))
+          }
         </div>
       </CardBody>
     </Card>
   )
 }
 
-const MobileVersion = ({manga}: {manga : Manga} ) => {
+const MobileVersion = ({ manga }: { manga: Manga }) => {
   return (
     <div className="flex p-3 lg:hidden">
       <div className="z-30 mt-2 w-full">
@@ -120,7 +118,7 @@ const MobileVersion = ({manga}: {manga : Manga} ) => {
   )
 }
 
-const DesktopVersion = ({manga}: {manga : Manga} ) => {
+const DesktopVersion = ({ manga }: { manga: Manga }) => {
   return (
     <div className="hidden lg:flex">
       <div className="w-1/3">
