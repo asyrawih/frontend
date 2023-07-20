@@ -27,9 +27,11 @@ export const ChapterCard = ({ chapter, manga_id }: { chapter: Chapter[], manga_i
         <div className="grid grid-cols-3 gap-2">
           {filter.length > 0 ?
             filter.map((val) => (
-              <Card isPressable shadow="sm" key={val.chapter_id} className="flex border w-full h-16 justify-center items-center rounded ">
-                {`Chapter-${val.chapter}`}
-              </Card>
+              <Link href={`/detail/${manga_id}/read/${val.chapter_id}`}>
+                <Card isPressable shadow="sm" key={val.chapter_id} className="flex border w-full h-16 justify-center items-center rounded ">
+                  {`Chapter-${val.chapter}`}
+                </Card>
+              </Link>
             )) : chapter.map((val) => (
               <Link href={`/detail/${manga_id}/read/${val.chapter_id}`}>
                 <Card isPressable shadow="sm" key={val.chapter_id} className="flex border w-full h-16 justify-center items-center rounded ">
