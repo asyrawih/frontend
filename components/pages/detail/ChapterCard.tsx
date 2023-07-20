@@ -2,9 +2,10 @@
 import { Chapter } from "@/app/page";
 import SearchBar from "@/components/search";
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
+import Link from "next/link";
 import { ChangeEvent, useState } from "react";
 
-export const ChapterCard = ({ chapter }: { chapter: Chapter[] }) => {
+export const ChapterCard = ({ chapter, manga_id }: { chapter: Chapter[], manga_id: number }) => {
   const [filter, setFilter] = useState<Chapter[]>([]);
   const [filterValue, setFilterValue] = useState('')
 
@@ -30,9 +31,11 @@ export const ChapterCard = ({ chapter }: { chapter: Chapter[] }) => {
                 {`Chapter-${val.chapter}`}
               </Card>
             )) : chapter.map((val) => (
-              <Card isPressable shadow="sm" key={val.chapter_id} className="flex border w-full h-16 justify-center items-center rounded ">
-                {`Chapter-${val.chapter}`}
-              </Card>
+              <Link href={`/detail/${manga_id}/read/${val.chapter_id}`}>
+                <Card isPressable shadow="sm" key={val.chapter_id} className="flex border w-full h-16 justify-center items-center rounded ">
+                  {`Chapter-${val.chapter}`}
+                </Card>
+              </Link>
             ))
           }
         </div>

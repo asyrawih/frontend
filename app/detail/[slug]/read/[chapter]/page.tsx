@@ -1,11 +1,6 @@
 import { Response } from "@/app/page"
 import { GeneratePresignedUrl } from "@/utils/minio"
 
-type ReadChapter = {
-
-}
-
-
 export interface Chapter {
   id: number
   manga_id: number
@@ -13,14 +8,14 @@ export interface Chapter {
   file_path: string
 }
 
-const GetChapter = async (): Promise<Response<Chapter[]>> => {
+const GetChapter = async (id: string): Promise<Response<Chapter[]>> => {
   const backend = process.env.BACKEND_URL
-  let chapter = await fetch(backend + "/chapter/read?chapter_id=3", { next: { revalidate: 3 } })
+  let chapter = await fetch(backend + "/chapter/read?chapter_id=" + id, { next: { revalidate: 2 } })
   return chapter.json()
 }
 
-export default async function ChapterRead() {
-  let { data } = await GetChapter()
+export default async function ChapterRead({params} : {params: {slug: string, chapter: string}}) {
+  let { data } = await GetChapter(params.chapter)
 
   let newData = data.map(async (chapter: Chapter) => {
     const preSignedUrl = await GeneratePresignedUrl(chapter.file_path)

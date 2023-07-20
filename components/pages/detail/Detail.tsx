@@ -23,7 +23,7 @@ export const Detail = ({ data }: { data: Manga }) => {
         </CardBody>
       </Card>
       <Spacer y={6} />
-      <ChapterCard chapter={data.chapter} />
+      <ChapterCard chapter={data.chapter} manga_id={data.id} />
       <Spacer y={12} />
     </div>
   )
