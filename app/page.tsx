@@ -30,7 +30,8 @@ export interface Chapter {
   created_at: string
 }
 const getManga = async (): Promise<Response<Manga[]>> => {
-  const req = await fetch("http://localhost:3000/manga/", { next: { revalidate: 2, tags: ["manga"] } })
+  const backend = process.env.BACKEND_URL
+  const req = await fetch(backend + "/manga/", { next: { revalidate: 2, tags: ["manga"] } })
   return req.json()
 }
 
